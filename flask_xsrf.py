@@ -7,15 +7,23 @@
 
   :usage:
 
-    from flask import Flask, Response
+    from flask import Flask, Response, session
     from flask.ext import xsrf
 
     app = Flask(__name__)
+    app.debug = True
+    app.secret_key = 'session_secret_key'
+    app.config['session_cookie_secure'] = True
+
+    @app.before_request
+    def before_request():
+      if 'user_id' not in session:
+        session['user_id'] = 'random_generated_anonymous_id'
 
     def get_user_id():
       return session.get('user_id')
 
-    xsrfh = XSRFTokenHandler(
+    xsrfh = xsrf.XSRFTokenHandler(
       user_func=get_user_id, secret='xsrf_secret', timeout=3600)
 
     @app.route('/create', methods=['GET'])
@@ -40,7 +48,7 @@ from flask import session
 from functools import wraps
 from werkzeug import exceptions
 
-__all__ = ['XSRFTokenHandler', 'XSRFToken', 'XSRFException',
+__all__ = ['XSRFTokenHandler', 'XSRFToken', 'XSRFTokenUserIdInvalid',
 'XSRFTokenMalformed', 'XSRFTokenExpiredException', 'XSRFTokenInvalid',
 'TOKEN_FORM_NAME', 'TOKEN_HEADER_NAME']
 
@@ -48,13 +56,16 @@ __all__ = ['XSRFTokenHandler', 'XSRFToken', 'XSRFException',
 class XSRFException(exceptions.HTTPException):
   pass
 
-class XSRFTokenMalformed(XSRFException):
+class XSRFTokenMalformed(XSRFException, exceptions.NotAcceptable):
   pass
 
-class XSRFTokenExpiredException(XSRFException):
+class XSRFTokenExpiredException(XSRFException, exceptions.Unauthorized):
   pass
 
-class XSRFTokenInvalid(XSRFException):
+class XSRFTokenInvalid(XSRFException, exceptions.NotAcceptable):
+  pass
+
+class XSRFTokenUserIdInvalid(XSRFException, exceptions.NotAcceptable):
   pass
 
 TOKEN_FORM_NAME = 'xsrf-token'
@@ -76,7 +87,10 @@ class XSRFTokenHandler:
     def wrapper(func):
       @wraps(func)
       def decorated(*args, **kw):
-        self.token = XSRFToken(user_id=self.user_func(), secret=self.secret)
+        user_id = self.user_func()
+        if not user_id:
+          raise XSRFTokenUserIdInvalid('XSRFTokenUserIdInvalid')
+        self.token = XSRFToken(user_id=user_id, secret=self.secret)
         session[TOKEN_FORM_NAME] = self.token.generate_token_string()
         response = func(*args, **kw)
         response.headers.add(TOKEN_HEADER_NAME, session[TOKEN_FORM_NAME])
@@ -88,25 +102,32 @@ class XSRFTokenHandler:
     def wrapper(func):
       @wraps(func)
       def decorated(*args, **kw):
-        self.token = XSRFToken(user_id=self.user_func(), secret=self.secret)
+        user_id = self.user_func()
+        if not user_id:
+          raise XSRFTokenUserIdInvalid('UserId not valid.')
+        self.token = XSRFToken(user_id=user_id, secret=self.secret)
         # parse the token string..
         request_token_string = self.parse_xsrftoken_from_request()
         token_string = session.pop(TOKEN_FORM_NAME, None)
         # validate the token string..
-        self.verify_token(request_token_string, token_string)
+        self.verify_token(token_string, request_token_string)
         return func(*args, **kw)
       return decorated
     return wrapper
 
-  def verify_token(self, request_token_string, token_string):
-    if not token_string or token_string != request_token_string:
-      raise XSRFTokenInvalid()
+  def verify_token(self, token_string, request_token_string):
+    if not token_string:
+      raise XSRFTokenInvalid('Token not set.')
+    if not request_token_string:
+      raise XSRFTokenInvalid('Request token not valid.')
+    if token_string != request_token_string:
+      raise XSRFTokenInvalid('Token not valid.')
     self.token.verify_token_string(token_string, timeout=self.timeout)
 
   def parse_xsrftoken_from_request(self):
     # get the value from a request header..
     value = request.headers.get(TOKEN_HEADER_NAME)
-    if value is None:
+    if value is None or len(value) < 1:
       # get the value from form params..
       value = request.form.get(TOKEN_FORM_NAME)
     return value
