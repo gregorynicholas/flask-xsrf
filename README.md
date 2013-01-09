@@ -4,6 +4,8 @@
 
 A Flask extension for defending against cross-site request forgery attacks (XSRF/CSRF).
 
+[![Build Status](https://travis-ci.org/gregorynicholas/flask-xsrf.png?branch=master)](https://travis-ci.org/gregorynicholas/flask-xsrf)
+
 ----
 
 ### install with pip
