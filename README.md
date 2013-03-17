@@ -9,7 +9,7 @@ A Flask extension for defending against cross-site request forgery attacks (XSRF
 ----
 
 ### install with pip
-`pip install https://github.com/gregorynicholas/flask-xsrf/tarball/master`
+`pip install flask-xsrf`
 
 ### usage
 
