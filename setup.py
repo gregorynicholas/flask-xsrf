@@ -18,7 +18,7 @@ from setuptools import setup
 
 setup(
   name='flask-xsrf',
-  version='1.0.0',
+  version='1.0.1',
   url='http://github.com/gregorynicholas/flask-xsrf',
   license='MIT',
   author='gregorynicholas',
@@ -34,7 +34,9 @@ setup(
   zip_safe=False,
   platforms='any',
   install_requires=[
-    'flask',
+    'flask==0.9',
+    'werkzeug==0.8.3',
+    'blinker==1.2',
   ],
   dependency_links = [
   ],
