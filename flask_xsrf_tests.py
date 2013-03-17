@@ -138,6 +138,23 @@ def test_post():
   return Response('success')
 
 
+@app.errorhandler(xsrf.XSRFTokenInvalid)
+def xsrftokeninvalid():
+  return Response(status=400)
+
+@app.errorhandler(xsrf.XSRFTokenMalformed)
+def xsrftokenmalformed():
+  return Response(status=400)
+
+@app.errorhandler(xsrf.XSRFTokenExpiredException)
+def xsrftokenexpiredexception():
+  return Response(status=400)
+
+@app.errorhandler(xsrf.XSRFTokenUserIdInvalid)
+def xsrftokenuseridinvalid():
+  return Response(status=400)
+
+
 class XSRFTokenHandlerTests(FlaskTestCase):
   def setUp(self):
     self.app = app.test_client()
