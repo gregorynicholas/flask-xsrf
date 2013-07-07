@@ -1,44 +1,49 @@
 #!/usr/bin/env python
 """
-flask_xsrf
---------------
+flask-xsrf
+~~~~~~~~~~
 
-A Flask extension for defending against cross-site request forgery attacks
-(XSRF/CSRF).
+a flask extension for defending against cross-site request forgery attacks
+(xsrf/csrf).
 
-http://github.com/gregorynicholas/flask-xsrf
+
+links
 `````
 
-* `documentation <http://packages.python.org/flask_xsrf>`_
-* `development version
-  <http://github.com/gregorynicholas/flask-xsrf/zipball/master#egg=flask_xsrf-dev>`_
+* `docs <http://gregorynicholas.github.io/flask-xsrf>`_
+* `source <http://github.com/gregorynicholas/flask-xsrf>`_
+* `package <http://packages.python.org/flask-xsrf>`_
+* `travis-ci <http://travis-ci.org/gregorynicholas/flask-xsrf>`_
 
 """
 from setuptools import setup
 
+__version__ = "1.0.1"
+
+with open("requirements.txt", "r") as f:
+  requires = f.readlines()
+
+with open("README.md", "r") as f:
+  long_description = f.readlines()
+
+
 setup(
   name='flask-xsrf',
-  version='1.0.1',
+  version=__version__,
   url='http://github.com/gregorynicholas/flask-xsrf',
   license='MIT',
   author='gregorynicholas',
-  description='A Flask extension for XSRF/CSRF protection.',
-  long_description=__doc__,
-  packages=[
-  ],
-  namespace_packages=[
-  ],
-  py_modules=[
-    'flask_xsrf',
-  ],
+  author_email='gn@gregorynicholas.com',
+  description=__doc__,
+  long_description=long_description,
   zip_safe=False,
   platforms='any',
-  install_requires=[
-    'flask==0.9',
-    'werkzeug==0.8.3',
-    'blinker==1.2',
+  install_requires=requires,
+  py_modules=[
+    'flask_xsrf',
+    'flask_xsrf_tests',
   ],
-  dependency_links = [
+  dependency_links=[
   ],
   classifiers=[
     'Development Status :: 4 - Beta',

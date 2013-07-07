@@ -1,17 +1,41 @@
-# flask_xsrf
+flask_xsrf
+==========
 
---------------
+a flask extension for defending against cross-site request forgery attacks
+(xsrf/csrf).
 
-A Flask extension for defending against cross-site request forgery attacks (XSRF/CSRF).
 
 [![Build Status](https://travis-ci.org/gregorynicholas/flask-xsrf.png?branch=master)](https://travis-ci.org/gregorynicholas/flask-xsrf)
 
-----
+
+* [docs](http://gregorynicholas.github.io/flask-xsrf)
+* [source](http://github.com/gregorynicholas/flask-xsrf)
+* [package](http://packages.python.org/flask-xsrf)
+* [changelog](https://github.com/gregorynicholas/flask-xsrf/blob/master/CHANGES.md)
+* [travis-ci](http://travis-ci.org/gregorynicholas/flask-xsrf)
+
+
+-----
+
+
+### overview
+
+* [todo]
+
+
+### features
+
+* [todo]
+
+
+-----
 
 ### install with pip
-`pip install flask-xsrf`
 
-### usage
+    pip install flask-xsrf
+
+
+### example usage
 
     from flask import Flask, Response, session
     app = Flask(__name__)
