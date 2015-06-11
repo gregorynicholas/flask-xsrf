@@ -1,26 +1,44 @@
 flask_xsrf
 ==========
 
-a flask extension for defending against cross-site request forgery attacks
-(xsrf/csrf).
+[flask](http://flask.pocoo.org) extension for defending against cross-site
+request forgery attacks (xsrf/csrf)
 
 
-[![Build Status](https://travis-ci.org/gregorynicholas/flask-xsrf.png?branch=master)](https://travis-ci.org/gregorynicholas/flask-xsrf)
+<br>
+**build-status:**
+
+`master ` [![travis-ci build-status: master](https://secure.travis-ci.org/gregorynicholas/flask-xsrf.svg?branch=master)](https://travis-ci.org/gregorynicholas/flask-xsrf)
+<br>
+`develop` [![travis-ci build-status: develop](https://secure.travis-ci.org/gregorynicholas/flask-xsrf.svg?branch=develop)](https://travis-ci.org/gregorynicholas/flask-xsrf)
 
 
-* [docs](http://gregorynicholas.github.io/flask-xsrf)
+**links:**
+
+* [homepage](http://gregorynicholas.github.io/flask-xsrf)
 * [source](http://github.com/gregorynicholas/flask-xsrf)
-* [package](http://packages.python.org/flask-xsrf)
+* [python-package](http://packages.python.org/flask-xsrf)
+* [github-issues](https://github.com/gregorynicholas/flask-xsrf/issues)
 * [changelog](https://github.com/gregorynicholas/flask-xsrf/blob/master/CHANGES.md)
 * [travis-ci](http://travis-ci.org/gregorynicholas/flask-xsrf)
 
 
+<br>
 -----
+<br>
 
 
-### overview
+### getting started
 
-* [todo]
+
+install with pip:
+
+    $ pip install flask-xsrf
+
+
+<br>
+-----
+<br>
 
 
 ### features
@@ -28,11 +46,9 @@ a flask extension for defending against cross-site request forgery attacks
 * [todo]
 
 
+<br>
 -----
-
-### install with pip
-
-    pip install flask-xsrf
+<br>
 
 
 ### example usage
