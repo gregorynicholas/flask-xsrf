@@ -157,7 +157,7 @@ class XSRFToken(object):
       self.current_time = int(current_time)
 
   def _digest_maker(self):
-    return hmac.new(self.secret, digestmod=hashlib.sha1)
+    return hmac.new(self.secret, digestmod=hashlib.sha256)
 
   def generate_token_string(self, action=None):
     """Generate a hash of the given token contents that can be verified.
