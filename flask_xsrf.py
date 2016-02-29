@@ -1,8 +1,8 @@
 """
-  flask_xsrf
-  ~~~~~~~~~~~~~~~~~
+  flask-xsrf
+  ~~~~~~~~~~
 
-  A Flask extension for defending against cross-site request forgery attacks
+  flask extension for defending against cross-site request forgery attacks
   (XSRF/CSRF).
 
   :usage:
@@ -36,7 +36,8 @@
     def create_post():
       return Response('success')
 
-  :copyright: (c) 2012 by gregorynicholas.
+
+  :author: @gregorynicholas
   :license: MIT, see LICENSE for more details.
 """
 import hmac
